@@ -1,0 +1,173 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Predict Fire</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+
+    <style>
+        .fire-input {
+            margin-top: 10px;
+            margin-left: 100px;
+            width: 80%;
+
+        }
+
+        .file-input {
+            margin: auto;
+            padding-left: 150px;
+        }
+
+        .title {
+            text-align: center;
+            font-weight: bold;
+
+            font-size: 25px;
+            background-color: #f8f9fa;
+            padding-top: 10px;
+            padding-bottom: 10px;
+            color: #273582;
+        }
+        
+        
+    </style>
+
+</head>
+
+<body>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2"
+        crossorigin="anonymous"></script>
+    <div class="title">Predict Possibility of Fire</div>
+
+    <div class="fire-input">
+        <!-- main row -->
+        <div class="row">
+            <!-- user input column -->
+            <div class="col">
+                <form action="/predict-fire" method="POST">
+                    <!-- 1st row -->
+                    <div class="row">
+                        <div class="col">
+                            <label>Date(Select between Jun-Sep)</label>
+                            <input class="form-control" type="date" aria-label="default input example" name="date">
+                        </div>
+                        <div class="col">
+                            <label>Temperature</label>
+                            <input class="form-control" type="text" aria-label="default input example"
+                                name="temperature">
+                        </div>
+                    </div>
+
+                    <!-- 2nd row -->
+                    <div class="row my-2">
+                        <div class="col">
+                            <label>Relative Humidity(%)</label>
+                            <input class="form-control" type="text" aria-label="default input example" name="rh">
+                        </div>
+                        <div class="col">
+                            <label>Wind Speed(km/hr)</label>
+                            <input class="form-control" type="text" aria-label="default input example" name="ws">
+                        </div>
+                    </div>
+
+                    <!-- 3rd row -->
+                    <div class="row my-2">
+                        <div class="col">
+                            <label>Rain(mm)</label>
+                            <input class="form-control" type="text" aria-label="default input example" name="rain">
+                        </div>
+                        <div class="col">
+                            <label>FFMC</label>
+                            <input class="form-control" type="text" aria-label="default input example" name="ffmc">
+                        </div>
+                    </div>
+
+                    <!-- 4th row -->
+                    <div class="row my-2">
+                        <div class="col">
+                            <label>DMC</label>
+                            <input class="form-control" type="text" aria-label="default input example" name="dmc">
+                        </div>
+                        <div class="col">
+                            <label>DC</label>
+                            <input class="form-control" type="text" aria-label="default input example" name="dc">
+                        </div>
+                    </div>
+
+
+                    <!-- 5th row -->
+                    <div class="row my-2">
+                        <div class="col">
+                            <label>ISI</label>
+                            <input class="form-control" type="text" aria-label="default input example" name="isi">
+                        </div>
+                        <div class="col">
+                            <label>BUI</label>
+                            <input class="form-control" type="text" aria-label="default input example" name="bui">
+                        </div>
+                    </div>
+
+                    <!-- 6th row -->
+                    <div class="row my-2">
+                        <div class="col">
+                            <label>FWI</label>
+                            <input class="form-control" type="text" aria-label="default input example" name="fwi">
+                        </div>
+                        <div class="col">
+                            <label>Region</label>
+                            <select class="form-select" aria-label="Default select example" name="region">
+                                <option value="BR">Bejaia Region</option>
+                                <option value="SBAR">Sidi-Bel Abbes Region</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <center>
+                        <div class="d-grid gap-2 col-6 mx-auto">
+                            <button class="btn btn-primary my-2" type="submit">Predict</button>
+                        </div>
+                    </center>
+
+                </form>
+                <!-- Alert Message -->
+                {% with message = get_flashed_messages(with_categories=true) %}
+                {% if message %}
+                {% for category, msg in message %}
+                <div class="message">
+                    <div class="alert alert-{{category}} alert-dismissible fade show" role="alert">
+                        {{msg}}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                </div>
+                {% endfor %}
+                {% endif %}
+                {% endwith %}
+            </div>
+
+            <!-- file input column -->
+            <div class="col file-input">
+                <form action="/predict-fire-dataset" method="POST" enctype="multipart/form-data">
+                    <label for="">Upload dataset</label>
+                    <div class="input-group mb-3 my-2">
+                        <input type="file" class="form-control" id="inputGroupFile01" name="filePath">
+                    </div>
+                    <center>
+                        <div class="d-grid gap-2 col-6 mx-auto">
+                            <button class="btn btn-primary my-2" type="submit">Predict</button>
+                        </div>
+                    </center>
+                </form>
+            </div>
+        </div>
+
+    </div>
+
+
+
+</body>
+
+</html>
